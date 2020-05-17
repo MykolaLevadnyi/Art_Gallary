@@ -47,29 +47,32 @@ namespace Art_Gallary.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> PutBeadsType(long id, BeadsType beadsType)
         {
-            if (id != beadsType.Id)
+            var name = _context.BeadsTypes.Where(b => b.Name == beadsType.Name).FirstOrDefault();
+            if (name == null)
             {
-                return BadRequest();
-            }
-
-            _context.Entry(beadsType).State = EntityState.Modified;
-
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!BeadsTypeExists(id))
+                if (id != beadsType.Id)
                 {
-                    return NotFound();
+                    return BadRequest();
                 }
-                else
+
+                _context.Entry(beadsType).State = EntityState.Modified;
+
+                try
                 {
-                    throw;
+                    await _context.SaveChangesAsync();
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (!BeadsTypeExists(id))
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
                 }
             }
-
             return NoContent();
         }
 
@@ -79,9 +82,11 @@ namespace Art_Gallary.Controllers
         [HttpPost]
         public async Task<ActionResult<BeadsType>> PostBeadsType(BeadsType beadsType)
         {
+            var name = _context.BeadsTypes.Where(b => b.Name == beadsType.Name).FirstOrDefault();
+            if (name == null) {
             _context.BeadsTypes.Add(beadsType);
             await _context.SaveChangesAsync();
-
+            }
             return CreatedAtAction("GetBeadsType", new { id = beadsType.Id }, beadsType);
         }
 

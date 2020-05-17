@@ -47,6 +47,8 @@ namespace Art_Gallary.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> PutBeadsToEmbs(long id, BeadsToEmbs beadsToEmbs)
         {
+            var r = _context.BeadsToEmbs.Where(b => b.BeadId == beadsToEmbs.BeadId && b.EmbroidericId == beadsToEmbs.EmbroidericId).FirstOrDefault();
+            if (r == null) { 
             if (id != beadsToEmbs.Id)
             {
                 return BadRequest();
@@ -69,7 +71,7 @@ namespace Art_Gallary.Controllers
                     throw;
                 }
             }
-
+            }
             return NoContent();
         }
 
@@ -79,9 +81,12 @@ namespace Art_Gallary.Controllers
         [HttpPost]
         public async Task<ActionResult<BeadsToEmbs>> PostBeadsToEmbs(BeadsToEmbs beadsToEmbs)
         {
-            _context.BeadsToEmbs.Add(beadsToEmbs);
-            await _context.SaveChangesAsync();
-
+            var r = _context.BeadsToEmbs.Where(b => b.BeadId == beadsToEmbs.BeadId && b.EmbroidericId == beadsToEmbs.EmbroidericId).FirstOrDefault();
+            if (r == null)
+            {
+                _context.BeadsToEmbs.Add(beadsToEmbs);
+                await _context.SaveChangesAsync();
+            }
             return CreatedAtAction("GetBeadsToEmbs", new { id = beadsToEmbs.Id }, beadsToEmbs);
         }
 

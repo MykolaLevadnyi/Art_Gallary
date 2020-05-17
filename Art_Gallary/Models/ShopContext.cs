@@ -23,6 +23,6 @@ namespace Art_Gallary.Models
             Database.EnsureCreated();
         }
 
-
+       
     }
 }

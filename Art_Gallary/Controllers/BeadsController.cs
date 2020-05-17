@@ -14,12 +14,13 @@ namespace Art_Gallary.Controllers
     public class BeadsController : ControllerBase
     {
         private readonly ShopContext _context;
-
+        
         public BeadsController(ShopContext context)
         {
             _context = context;
         }
 
+        
         // GET: api/Beads
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Bead>>> GetBeads()
@@ -47,29 +48,32 @@ namespace Art_Gallary.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> PutBead(long id, Bead bead)
         {
-            if (id != bead.Id)
+            var num = _context.Beads.Where(e => e.Num == bead.Num).FirstOrDefault();
+            if (num == null)
             {
-                return BadRequest();
-            }
-
-            _context.Entry(bead).State = EntityState.Modified;
-
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!BeadExists(id))
+                if (id != bead.Id)
                 {
-                    return NotFound();
+                    return BadRequest();
                 }
-                else
+
+                _context.Entry(bead).State = EntityState.Modified;
+
+                try
                 {
-                    throw;
+                    await _context.SaveChangesAsync();
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (!BeadExists(id))
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
                 }
             }
-
             return NoContent();
         }
 
@@ -79,9 +83,17 @@ namespace Art_Gallary.Controllers
         [HttpPost]
         public async Task<ActionResult<Bead>> PostBead(Bead bead)
         {
-            _context.Beads.Add(bead);
-            await _context.SaveChangesAsync();
-
+            
+            var num = _context.Beads.Where(e => e.Num == bead.Num).FirstOrDefault();
+            var image = _context.Beads.Where(e => e.Image == bead.Image).FirstOrDefault();
+            
+            
+            if (num == null && image == null)
+            {
+                _context.Beads.Add(bead);
+                await _context.SaveChangesAsync();
+            }
+            
             return CreatedAtAction("GetBead", new { id = bead.Id }, bead);
         }
 

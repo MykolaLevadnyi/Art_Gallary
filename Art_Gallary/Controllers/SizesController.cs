@@ -47,29 +47,33 @@ namespace Art_Gallary.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> PutSize(long id, Size size)
         {
-            if (id != size.Id)
+            var wh = _context.Sizes.Where(s => s.width == size.width && s.length == size.length).FirstOrDefault();
+            var name = _context.Sizes.Where(s => s.Name == size.Name).FirstOrDefault();
+            if (wh == null && name == null)
             {
-                return BadRequest();
-            }
-
-            _context.Entry(size).State = EntityState.Modified;
-
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!SizeExists(id))
+                if (id != size.Id)
                 {
-                    return NotFound();
+                    return BadRequest();
                 }
-                else
+
+                _context.Entry(size).State = EntityState.Modified;
+
+                try
                 {
-                    throw;
+                    await _context.SaveChangesAsync();
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (!SizeExists(id))
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
                 }
             }
-
             return NoContent();
         }
 
@@ -79,9 +83,12 @@ namespace Art_Gallary.Controllers
         [HttpPost]
         public async Task<ActionResult<Size>> PostSize(Size size)
         {
+            var wh = _context.Sizes.Where(s => s.width == size.width && s.length == size.length).FirstOrDefault();
+            var name = _context.Sizes.Where(s => s.Name == size.Name).FirstOrDefault();
+            if(wh==null && name == null) {  
             _context.Sizes.Add(size);
             await _context.SaveChangesAsync();
-
+            }
             return CreatedAtAction("GetSize", new { id = size.Id }, size);
         }
 

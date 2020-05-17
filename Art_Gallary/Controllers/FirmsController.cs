@@ -47,29 +47,32 @@ namespace Art_Gallary.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> PutFirm(long id, Firm firm)
         {
-            if (id != firm.Id)
+            var f = _context.Firms.Where(f => f.Name == firm.Name).FirstOrDefault();
+            if (f == null)
             {
-                return BadRequest();
-            }
-
-            _context.Entry(firm).State = EntityState.Modified;
-
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!FirmExists(id))
+                if (id != firm.Id)
                 {
-                    return NotFound();
+                    return BadRequest();
                 }
-                else
+
+                _context.Entry(firm).State = EntityState.Modified;
+
+                try
                 {
-                    throw;
+                    await _context.SaveChangesAsync();
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (!FirmExists(id))
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
                 }
             }
-
             return NoContent();
         }
 
@@ -79,8 +82,11 @@ namespace Art_Gallary.Controllers
         [HttpPost]
         public async Task<ActionResult<Firm>> PostFirm(Firm firm)
         {
+            var f = _context.Firms.Where(f => f.Name == firm.Name).FirstOrDefault();
+            if (f == null) { 
             _context.Firms.Add(firm);
             await _context.SaveChangesAsync();
+            }
 
             return CreatedAtAction("GetFirm", new { id = firm.Id }, firm);
         }

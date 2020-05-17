@@ -47,29 +47,32 @@ namespace Art_Gallary.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> PutColor(long id, Color color)
         {
-            if (id != color.Id)
+            var name = _context.Colors.Where(c => c.Name == color.Name).FirstOrDefault();
+            if (name == null)
             {
-                return BadRequest();
-            }
-
-            _context.Entry(color).State = EntityState.Modified;
-
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!ColorExists(id))
+                if (id != color.Id)
                 {
-                    return NotFound();
+                    return BadRequest();
                 }
-                else
+
+                _context.Entry(color).State = EntityState.Modified;
+
+                try
                 {
-                    throw;
+                    await _context.SaveChangesAsync();
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (!ColorExists(id))
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
                 }
             }
-
             return NoContent();
         }
 
@@ -79,9 +82,11 @@ namespace Art_Gallary.Controllers
         [HttpPost]
         public async Task<ActionResult<Color>> PostColor(Color color)
         {
+            var name = _context.Colors.Where(c => c.Name == color.Name).FirstOrDefault();
+            if (name == null) { 
             _context.Colors.Add(color);
             await _context.SaveChangesAsync();
-
+            }
             return CreatedAtAction("GetColor", new { id = color.Id }, color);
         }
 

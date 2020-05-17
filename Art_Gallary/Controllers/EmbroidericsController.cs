@@ -47,29 +47,32 @@ namespace Art_Gallary.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> PutEmbroideric(long id, Embroideric embroideric)
         {
-            if (id != embroideric.Id)
-            {
-                return BadRequest();
-            }
+            var num = _context.Embroiderics.Where(e => e.Num == embroideric.Num).FirstOrDefault();
 
-            _context.Entry(embroideric).State = EntityState.Modified;
-
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!EmbroidericExists(id))
+            if (num==null) { 
+                if (id != embroideric.Id)
                 {
-                    return NotFound();
+                    return BadRequest();
                 }
-                else
+
+                _context.Entry(embroideric).State = EntityState.Modified;
+
+                try
                 {
-                    throw;
+                    await _context.SaveChangesAsync();
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (!EmbroidericExists(id))
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
                 }
             }
-
             return NoContent();
         }
 
@@ -79,9 +82,12 @@ namespace Art_Gallary.Controllers
         [HttpPost]
         public async Task<ActionResult<Embroideric>> PostEmbroideric(Embroideric embroideric)
         {
+            var num = _context.Embroiderics.Where(e => e.Num == embroideric.Num).FirstOrDefault();
+            var image = _context.Embroiderics.Where(e => e.Image == embroideric.Image).FirstOrDefault();
+            if(num==null && image == null) { 
             _context.Embroiderics.Add(embroideric);
             await _context.SaveChangesAsync();
-
+            }
             return CreatedAtAction("GetEmbroideric", new { id = embroideric.Id }, embroideric);
         }
 

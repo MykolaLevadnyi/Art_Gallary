@@ -18,7 +18,7 @@ namespace Art_Gallary.Models
         public long EmbTypeId { get; set; }
         public string Name { get; set; }
         public string Num { get; set; }
-        public byte[] Image { get; set; }
+        public string Image { get; set; }
         public double Price { get; set; }
 
         public virtual Firm firm { get; set; }

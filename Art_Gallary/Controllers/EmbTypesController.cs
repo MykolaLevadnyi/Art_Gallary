@@ -47,29 +47,32 @@ namespace Art_Gallary.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> PutEmbType(long id, EmbType embType)
         {
-            if (id != embType.Id)
+            var name = _context.EmbTypes.Where(e => e.Name == embType.Name).FirstOrDefault();
+            if (name == null)
             {
-                return BadRequest();
-            }
-
-            _context.Entry(embType).State = EntityState.Modified;
-
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!EmbTypeExists(id))
+                if (id != embType.Id)
                 {
-                    return NotFound();
+                    return BadRequest();
                 }
-                else
+
+                _context.Entry(embType).State = EntityState.Modified;
+
+                try
                 {
-                    throw;
+                    await _context.SaveChangesAsync();
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (!EmbTypeExists(id))
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
                 }
             }
-
             return NoContent();
         }
 
@@ -79,9 +82,11 @@ namespace Art_Gallary.Controllers
         [HttpPost]
         public async Task<ActionResult<EmbType>> PostEmbType(EmbType embType)
         {
+            var name = _context.EmbTypes.Where(e => e.Name == embType.Name).FirstOrDefault();
+            if (name == null) { 
             _context.EmbTypes.Add(embType);
             await _context.SaveChangesAsync();
-
+            }
             return CreatedAtAction("GetEmbType", new { id = embType.Id }, embType);
         }
 

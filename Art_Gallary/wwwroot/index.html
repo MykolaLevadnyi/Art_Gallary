@@ -1,0 +1,99 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <link href="css/bootstrap.css" rel="stylesheet" type="text/css">
+    <meta charset="UTF-8">
+    <title>Informatics-2020-Lab2 Library</title>
+    <link rel="stylesheet" href="css/site.css" />
+    <style>
+        
+
+        .tile {
+            height: 100px;
+            width: 200px;
+            margin-bottom: 15px;
+            position: relative;
+            border: 2px solid #121010;
+            overflow: hidden;
+            background: url('images/unnamed.png') no-repeat;
+            background-position: center;
+            border:1px solid #808080;
+        }
+        .navbar-dark .navbar-brand {
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .tile:hover {
+            box-shadow: 1px 2px 6px 2px #514e4e;
+        }
+
+        .tile span {
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            width: 100%;
+            text-align: center;
+            font-size: 1.2em;
+            text-transform: uppercase;
+            background-color: #000;
+            color: #fff;
+            opacity: .8;
+            border-top: 1px solid #808080;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark border-bottom box-shadow" style="        position: relative;
+        margin-bottom: 0;
+        background-color: black;
+        text-align: center;
+">
+        <div class="container">
+            <a class="navbar-brand" asp-area="" href="index.html">Shop</a>
+            <!--<button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                    aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse" style="position:relative;">
+                <!--<ul class="navbar-nav flex-grow-1" style="position:absolute; left:-10px;">
+        <li class="nav-item">
+            <a class="nav-link text-white" asp-area="" href="Firms.html">Firms</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link text-white" asp-area="" href="Sizes.html">Sizes</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link text-white" asp-area="" href="EmbTypes.html">EmbTypes</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link text-white" asp-area="" href="Embroiderics.html">Embroiderics</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link text-white" asp-area="" href="BeadsTypes.html">BeadsTypes</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link text-white" asp-area="" href="Beads.html">Beads</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link text-white" asp-area="" href="BeadsToEmbs.html">BeadsToEmbs</a>
+    </ul>-->
+        </div>
+        
+    </nav>
+    <div class="jumbotron">
+        <h1 style="text-align:center;">WELCOME TO OUR SHOP</h1>
+    </div>
+    <div style="margin-left:50px;margin-right:50px;">
+        <div id="home-tiles" class="row">
+            <div class="col-3"><a href="Firms.html"><div class="tile"><span>Firms</span></div></a></div>
+            <div class="col-3"><a href="EmbTypes.html"><div class="tile"><span>EmbTypes</span></div></a></div>
+            <div class="col-3"><a href="BeadsTypes.html"><div class="tile"><span>BeadsTypes</span></div></a></div>
+            <div class="col-3"><a href="Colors.html"><div class="tile"><span>Colors</span></div></a></div>
+            <div class="col-3"><a href="Sizes.html"><div class="tile"><span>Sizes</span></div></a></div>
+            <div class="col-3"><a href="Beads.html"><div class="tile"><span>Beads</span></div></a></div>
+            <div class="col-3"><a href="Embroiderics.html"><div class="tile"><span>Embroiderics</span></div></a></div>
+            <div class="col-3"><a href="BeadsToEmbs.html"><div class="tile"><span>BeadsToEmbs</span></div></a></div>
+        </div>
+    </div>
+</body>
+</html>

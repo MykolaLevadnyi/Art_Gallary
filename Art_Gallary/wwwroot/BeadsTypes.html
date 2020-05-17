@@ -1,0 +1,103 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <link href="css/bootstrap.css" rel="stylesheet" type="text/css">
+    <meta charset="UTF-8">
+    <title>Informatics-2020-Lab2 Library</title>
+    <link rel="stylesheet" href="css/site.css" />
+    <style>
+    table {
+        text-align: center;
+        border: 1px solid black;
+        border-collapse: unset;
+    }
+
+    tbody {
+        border: 1px solid black;
+        border-collapse: unset;
+    }
+
+    td {
+        border-bottom: 1px solid black;
+        border-top: 1px solid black;
+        border-right: 1px solid black;
+        width: 33.33%;
+    }
+
+    th {
+        border-right: 1px solid black;
+    }
+</style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark border-bottom box-shadow" style="position:relative; margin-bottom:0; background-color:black;">
+        <div class="container">
+            <a class="navbar-brand" asp-area="" href="index.html">Shop</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                    aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse" style="position:relative;">
+                <ul class="navbar-nav flex-grow-1" style="position:absolute; left:-10px;">
+                    <li class="nav-item">
+                        <a class="nav-link text-white" asp-area="" href="Firms.html">Firms</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-white" asp-area="" href="Sizes.html">Sizes</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-white" asp-area="" href="EmbTypes.html">EmbTypes</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-white" asp-area="" href="Embroiderics.html">Embroiderics</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-white" asp-area="" href="BeadsTypes.html">BeadsTypes</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-white" asp-area="" href="Beads.html">Beads</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-white" asp-area="" href="BeadsToEmbs.html">BeadsToEmbs</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-white" asp-area="" href="Colors.html">Colors</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <div style="margin-left:50px;">
+        <h1>Types of beads</h1>
+        <h3>Add Type</h3>
+        <form action="javascript:void(0);" method="POST" onsubmit="addType()">
+            <input type="text" id="add-name" placeholder="New Type">
+            <input type="submit" value="Add">
+        </form>
+
+        <div id="editForm">
+            <h3>Edit</h3>
+            <form action="javascript:void(0);" onsubmit="updateType()">
+                <input type="hidden" id="edit-id">
+                <input type="text" id="edit-name">
+                <input type="submit" value="Save">
+                <a onclick="closeInput()" aria-label="Close">&#10006;</a>
+            </form>
+        </div>
+
+        <p id="counter"></p>
+
+        <table>
+            <tr>
+                <th>Name</th>
+            </tr>
+            <tbody id="types"></tbody>
+        </table>
+
+        <script src="js/BeadsTypes.js" asp-append-version="true"></script>
+        <script type="text/javascript">
+            getTypes();
+        </script>
+    </div>
+</body>
+</html>
